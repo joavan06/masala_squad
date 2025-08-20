@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedicOre — Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --accent1: #00d4ff;
+      --accent2: #7b61ff;
+      --accent3: #ff6b6b;
+      --text: #ffffff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(1200px 700px at 10% 20%, rgba(123,97,255,0.12), transparent 6%),
+                  radial-gradient(900px 600px at 90% 80%, rgba(0,212,255,0.10), transparent 6%),
+                  linear-gradient(135deg, #071021 0%, #0c2338 30%, #07213b 60%, #061021 100%);
+      overflow-x: hidden;
+    }
+    .bg-animation{
+      position:fixed;
+      inset:-30%;
+      z-index:0;
+      filter:blur(60px) saturate(120%);
+      background: conic-gradient(from 200deg at 50% 50%, rgba(123,97,255,0.16), rgba(0,212,255,0.14), rgba(255,107,107,0.12), rgba(123,97,255,0.16));
+      animation: spin 18s linear infinite;
+      opacity:0.9;
+      pointer-events:none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    header{
+      position:relative;
+      z-index:5;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 36px;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-family: "Montserrat", sans-serif;
+      font-weight:800;
+      letter-spacing:1px;
+      font-size:1.25rem;
+      color:var(--text);
+    }
+    .logo .mark{
+      width:36px;height:36px;border-radius:9px;
+      background: linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;color:#021226;
+    }
+    nav a{
+      color:rgba(255,255,255,0.85);
+      text-decoration:none;
+      margin-left:18px;
+      font-weight:600;
+    }
+    nav a:hover{text-decoration:underline;color:#fff}
+    main{
+      z-index:3;
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+    }
+    .hero{
+      max-width:900px;
+      text-align:center;
+      padding:48px;
+      border-radius:20px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(8px);
+    }
+    .eyebrow{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg,var(--accent2),var(--accent1));
+      color:#00121a;
+      font-weight:700;
+      font-size:0.78rem;
+      margin-bottom:20px;
+    }
+    h1{
+      font-family: "Montserrat", sans-serif;
+      font-size: clamp(28px, 4.5vw, 56px);
+      line-height:1.1;
+      margin-bottom: 18px;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+    h1 .accent{
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    p.lead{
+      margin-bottom: 26px;
+      font-size:1.05rem;
+      color: rgba(255,255,255,0.92);
+    }
+    .cta-row{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      padding:14px 26px;
+      font-weight:700;
+      border-radius:999px;
+      border: none;
+      cursor: pointer;
+      text-decoration:none;
+      color:#031018;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+    }
+    .btn:hover{
+      box-shadow: 0 20px 40px rgba(123,97,255,0.22);
+      transform: translateY(-2px);
+    }
+    footer{
+      text-align:center;
+      font-size:0.92rem;
+      padding:18px;
+      background: rgba(255,255,255,0.02);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+
+  <header>
+    <div class="logo">
+      <span class="mark">M</span>
+      MedicOre
+    </div>
+    <nav>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#team">Team</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Healthcare • Fast • Trusted</div>
+      <h1><span class="accent">GET YOUR HEALTH CARE ASAP...</span></h1>
+      <p class="lead">Fast, reliable healthcare connections when you need them most.</p>
+      <div class="cta-row">
+        <a class="btn" href="nextpage.html">Enter</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 MedicOre. All rights reserved.
+  </footer>
+</body>
+</html>

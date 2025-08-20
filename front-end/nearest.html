@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedicOre — Nearest Facility Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+    }
+    h1 {
+      font-family: "Montserrat", sans-serif;
+      margin-bottom: 20px;
+      text-align: center;
+      color: white;
+    }
+    .search-container {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-bar {
+      flex: 1;
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      outline: none;
+    }
+    .search-btn {
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #7b61ff, #00d4ff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      z-index: 10;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .suggestions div {
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background: #f0f0f0;
+    }
+    .results {
+      margin-top: 30px;
+      width: 90%;
+      max-width: 800px;
+    }
+    .facility {
+      background: rgba(255,255,255,0.95);
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Find the Nearest Facility</h1>
+  <div class="search-container">
+    <input type="text" id="search" class="search-bar" placeholder="ENTER THE MEDICAL CONDITION OR THE ISSUE CATEGORY." oninput="showSuggestions()">
+    <button class="search-btn" onclick="startSearch()">Enter</button>
+    <div id="suggestions" class="suggestions" style="display:none;"></div>
+  </div>
+  <div id="results" class="results"></div>
+
+  <script>
+    const conditions = ["Cardiology", "Dermatology", "Orthopedics", "Pediatrics", "Neurology", "Diabetes", "Fever", "Covid-19", "Dental", "ENT"];
+
+    function showSuggestions() {
+      const input = document.getElementById('search').value.trim().toLowerCase();
+      const suggestionsBox = document.getElementById('suggestions');
+      suggestionsBox.innerHTML = '';
+      if (input.length > 1) {
+        const filtered = conditions.filter(c => c.toLowerCase().includes(input));
+        if (filtered.length > 0) {
+          filtered.forEach(c => {
+            const div = document.createElement('div');
+            div.textContent = c;
+            div.onclick = () => selectSuggestion(c);
+            suggestionsBox.appendChild(div);
+          });
+          suggestionsBox.style.display = 'block';
+        } else {
+          suggestionsBox.style.display = 'none';
+        }
+      } else {
+        suggestionsBox.style.display = 'none';
+      }
+    }
+
+    function selectSuggestion(condition) {
+      document.getElementById('search').value = condition;
+      document.getElementById('suggestions').style.display = 'none';
+      findFacilities(condition);
+    }
+
+    function startSearch() {
+      const condition = document.getElementById('search').value.trim();
+      if (condition) {
+        findFacilities(condition);
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function findFacilities(condition) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          const facilities = [
+            { name: `${condition} Clinic`, address: `123 Health St, Near You` },
+            { name: `${condition} Hospital`, address: `456 Wellness Ave, Near You` },
+            { name: `${condition} Center`, address: `789 Care Blvd, Near You` }
+          ];
+
+          const results = document.getElementById('results');
+          results.innerHTML = facilities.map(f => `<div class='facility'><strong>${f.name}</strong><br>${f.address}</div>`).join('');
+        }, () => {
+          alert('Unable to retrieve location.');
+        });
+      } else {
+        alert("Geolocation not supported.");
+      }
+    }
+  </script>
+</body>
+</html>
